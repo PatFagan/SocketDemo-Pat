@@ -23,8 +23,9 @@ int TCPSocket::Listen( int inBackLog )
 	return NO_ERROR;
 }
 
-TCPSocketPtr TCPSocket::Accept( SocketAddress& inFromAddress )
+TCPSocketPtr TCPSocket::Accept( SocketAddress& inFromAddress, int& error )
 {
+	error = 0;
 	socklen_t length = inFromAddress.GetSize();
 	SOCKET newSocket = accept( mSocket, &inFromAddress.mSockAddr, &length );
 
@@ -34,7 +35,8 @@ TCPSocketPtr TCPSocket::Accept( SocketAddress& inFromAddress )
 	}
 	else
 	{
-		SocketUtil::ReportError( "TCPSocket::Accept" );
+		error = GetLastError();
+		//SocketUtil::ReportError( "TCPSocket::Accept" );
 		return nullptr;
 	}
 }

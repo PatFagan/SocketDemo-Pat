@@ -5,7 +5,7 @@ public:
 	int								Connect( const SocketAddress& inAddress );
 	int								Bind( const SocketAddress& inToAddress );
 	int								Listen( int inBackLog = 32 );
-	shared_ptr< TCPSocket >			Accept( SocketAddress& inFromAddress );
+	shared_ptr< TCPSocket >			Accept( SocketAddress& inFromAddress, int& error );
 	int32_t							Send( const void* inData, size_t inLen );
 	int32_t							Receive( void* inBuffer, size_t inLen );
 	int								SetNonBlockingMode(bool inShouldBeNonBlocking);
