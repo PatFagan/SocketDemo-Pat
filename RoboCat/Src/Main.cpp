@@ -95,7 +95,14 @@ int DoTCPClient()
 
 	std::cout << "Bound client socket\n";
 
-	SocketAddressPtr serverAddress = SocketAddressFactory::CreateIPv4FromString("127.0.0.1::8080");
+	SocketAddressPtr serverAddress = SocketAddressFactory::CreateIPv4FromString("127.0.0.1:8080");
+	if (serverAddress == nullptr) return 1;
+
+	clientSocket->SetNonBlockingMode(false);
+	result = clientSocket->Connect(*serverAddress);
+	if (result != 0) return 1;
+	clientSocket->SetNonBlockingMode(true);
+
 	clientSocket->Connect(*serverAddress);
 	if (result != 0) 
 	{
